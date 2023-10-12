@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "dropzone/dist/dropzone.css";
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900");
+
+* {
+  font-family: "Poppins";
+}
+
+@media (min-width: 700px) {
+  .ion-page {
+    width: 480px;
+    margin: auto;
+    position: relative;
+  }
+  .scroll-content {
+    overflow-y: auto;
+  }
+}
+
+.picker-item{
+  font-size: 16px !important;
+}
+
+ion-page > ion-content#content {
+  --ion-background-color: #d6d3d1;
+  width: 480px;
+  max-width: 100%;
+}
+
+ion-content{
+  --keyboard-offset: 0 !important;
+}
+
+ion-tab-button {
+  --color-selected: #b91c1c;
+  --color: black;
+}
+
+ion-tabs{
+  background-color: white;
+}
+
+ion-datetime{
+  border-radius: 20px !important;
+  padding: 8px;
+  font-family: "Poppins";
+  max-width: fit-content;
+}
+
+.form_style {
+  outline: none;
+  border: 1px solid gray;
+  /* box-shadow: 3px 4px 0px 1px #000; */
+  /* min-width: 290px; */
+  padding: 8px;
+  margin-top:8px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* .form_style:focus,
+.btn:focus {
+  transform: translateY(4px);
+  box-shadow: 1px 2px 0px 0px #000;
+} */
+
+.btn {
+  padding: 15px;
+  font-size: 15px;
+  border-radius: 30px;
+  font-weight: 800;
+  background: #1f1d42;
+  border: 1px solid #1f1d42;
+  /* box-shadow: 5px 5px 0px 0px #000; */
+}
+
+
+.container-auth {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgb(250 250 250);
+  min-height: 100vh;
+  z-index: 9999;
+  position: relative;
+}
+
+.form_area {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-direction: column;
+  /* background-color: #fff; */
+  height: auto;
+  /* width: auto; */
+  border-radius: 20px;
+  /* box-shadow: 30px 35px 2px rgb(220 38 38 / var(--tw-bg-opacity)); */
+}
+
+.title {
+  color: rgb(220 38 38 / var(--tw-bg-opacity));
+  font-weight: 500;
+  font-size: 2em;
+  margin: 20px;
+}
+
+.form_group {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  margin: 8px;
+  width: 100%;
+}
+
+/* .dropzone{
+  min-height: 80px;
+  padding: 10px;
+}
+
+.dropzone .dz-message{
+  margin: 2em 0;
+} */
