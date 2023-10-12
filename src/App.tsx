@@ -392,7 +392,7 @@ const MainTabs: React.FC = () => {
                     className={styles.tabButton}
                 >
                     <FingerprintIcon strokeWidth={1}/>
-                    <IonLabel className={styles.tabLabel}>Check Lock</IonLabel>
+                    <IonLabel className={styles.tabLabel}>Presensi</IonLabel>
                 </IonTabButton>
 
                 <IonTabButton
@@ -401,7 +401,7 @@ const MainTabs: React.FC = () => {
                     className={styles.tabButton}
                 >
                     <HistoryIcon strokeWidth={1}/>
-                    <IonLabel className={styles.tabLabel}>Presensi</IonLabel>
+                    <IonLabel className={styles.tabLabel}>Riwayat</IonLabel>
                 </IonTabButton>
 
                 <IonTabButton tab="profil" href="/profil" className={styles.tabButton}>

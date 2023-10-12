@@ -111,7 +111,7 @@ const Tab1: React.FC = () => {
           </div>
         ) : (
           <>
-            <div className="px-6 pt-20 text-2xl  text-center font-semibold">Pesantren
+            <div className="px-6 pt-12 text-2xl  text-center font-semibold">Pesantren
               <br />
               <span className={"text-accent"}>
               Al-Asr Makassar
