@@ -34,7 +34,7 @@ ion-content{
 }
 
 ion-tab-button {
-  --color-selected: #b91c1c;
+  --color-selected: #e94f37;
   --color: black;
 }
 
@@ -71,8 +71,8 @@ ion-datetime{
   font-size: 15px;
   border-radius: 30px;
   font-weight: 800;
-  background: #1f1d42;
-  border: 1px solid #1f1d42;
+  background: #e94f37;
+  border: 1px solid #e94f37;
   /* box-shadow: 5px 5px 0px 0px #000; */
 }
 

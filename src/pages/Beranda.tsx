@@ -1,22 +1,16 @@
-import {
-  IonContent,
-  IonPage,
-  IonRefresher,
-  IonRefresherContent,
-} from "@ionic/react";
-import { Fingerprint } from "lucide-react";
+import {IonContent, IonPage, IonRefresher, IonRefresherContent,} from "@ionic/react";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import "../../src/index.css";
 import Loading from "../components/Loading";
 import NotifAlert from "../components/NotifAlert";
-import { useGet, usePut } from "../hooks/useApi";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { GetDetailPayload } from "../models/GenericPayload";
-import { KaryawanEntity } from "../models/Karyawan.entity";
-import { useDistanceStore } from "../store/DistanceStore";
-import { Capacitor } from "@capacitor/core";
-import { Geolocation } from "@capacitor/geolocation";
+import {useGet, usePut} from "../hooks/useApi";
+import {useLocalStorage} from "../hooks/useLocalStorage";
+import {GetDetailPayload} from "../models/GenericPayload";
+import {KaryawanEntity} from "../models/Karyawan.entity";
+import {useDistanceStore} from "../store/DistanceStore";
+import {Capacitor} from "@capacitor/core";
+
 const Tab1: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>(
     "Gagal Melakukan Absen"
@@ -97,7 +91,7 @@ const Tab1: React.FC = () => {
       mutate({});
     }
   };
-  
+
   return (
     <IonPage>
       <IonContent scrollY={true} className={`${Capacitor.getPlatform() === 'ios' ? "pt-16" : ""}`}>
@@ -117,10 +111,15 @@ const Tab1: React.FC = () => {
           </div>
         ) : (
           <>
-            <div className="px-6 pt-20 text-2xl  text-center">HRIS NOBEL</div>
+            <div className="px-6 pt-20 text-2xl  text-center font-semibold">Pesantren
+              <br />
+              <span className={"text-accent"}>
+              Al-Asr Makassar
+              </span>
+
+            </div>
             <div className="flex flex-col h-[75vh] justify-center">
               <div className="flex flex-col pt-6 px-6 items-center w-full gap-4">
-                {/* <div className="bg-slate-300 w-48 h-48 rounded-full border-4 border-slate-900"> */}
                 <img
                   src={imageProfil}
                   alt="Gambar Profil"
@@ -142,29 +141,12 @@ const Tab1: React.FC = () => {
                 </div>
               </div>
 
-              {!isAbsenSuccess ? (
-                <button
-                  className={`mx-auto mt-12  rounded-full w-24 h-24 justify-center flex items-center
-                      px-5 py-2    cursor-pointer
-                      ${distance <= 100 ? "bg-[#1f1d42]" : "bg-gray-500"}`}
-                  disabled={isAbsenLoading}
-                  onClick={handleAbsen}
-                >
-                  <Fingerprint className="w-16 h-16 text-white " />
-                </button>
-              ) : (
-                <div className="mt-12 mx-auto text-center h-24">
-                  <div className=" bg-red-600 text-white  rounded-xl px-2 py-2 w-48 text-sm">
-                    {successMessage}
-                  </div>
-                </div>
-              )}
 
             {
-              payloadCheckAbsen?.data.message && 
+              payloadCheckAbsen?.data.message &&
               <div className="mt-12 mx-auto text-center h-24">
               <div className="rounded-xl px-2 py-2 w-48 text-sm">
-                 { payloadCheckAbsen?.data?.message?.substring(0,payloadCheckAbsen?.data?.message?.length-3)}
+                 { payloadCheckAbsen?.data?.message?.substring(0,payloadCheckAbsen?.data?.message?.length-3)} &nbsp;
               </div>
             </div>
             }

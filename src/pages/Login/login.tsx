@@ -58,10 +58,10 @@ export default function Login() {
     <IonContent  >
       <div className="container-auth relative">
         {/* <div className="absolute right-[-250px]  -z-10">
-          <img src={"assets/logo.png"} className="w-[500px] h-[500px] opacity-10" alt="Logo Nobel" />  
+          <img src={"assets/logo.png"} className="w-[500px] h-[500px] opacity-10" alt="Logo Nobel" />
       </div> */}
-        <img src={"assets/logo.png"} className="w-40 h-40 " alt="Logo Nobel" />
-        <h1 className="title font-semibold">HRIS Nobel</h1>
+        <img src={"assets/logo.png"} className="mx-auto mb-12" alt="Logo Nobel" />
+        {/*<h1 className="title !font-bold">HRIS <span className={"text-primary"}>Al-Asr</span> </h1>*/}
         <form onSubmit={handleSubmit(handleLogin)}>
           <div className="form_area px-3 w-[320px] gap-6">
             <h3 className="flex justify-start w-full   font-semibold text-xl  ">
@@ -93,7 +93,7 @@ export default function Login() {
             </div>
 
             <button
-              className={`btn bg-[#1f1d42] border-[#1f1d42] w-full my-4 ${
+              className={`btn bg-primary border-primary w-full my-4 ${
                 isLoading ? "animate-pulse" : ""
               }`}
               type="submit"

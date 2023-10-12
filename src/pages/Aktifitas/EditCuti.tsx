@@ -111,7 +111,7 @@ export default function EditCuti() {
     }
   };
 
-  const { data, isFetching, refetch } = useGet<
+  const { data } = useGet<
     GetDetailPayload<RiwayatIzinEntity>
   >({
     name: "riwayat-izin",

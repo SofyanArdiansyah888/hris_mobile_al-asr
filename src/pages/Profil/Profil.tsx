@@ -1,21 +1,16 @@
-import { IonContent, IonPage } from "@ionic/react";
-import { ArrowRightCircleIcon, LockIcon } from "lucide-react";
-import { ReactNode, useEffect, useState } from "react";
-import { CiLogout } from "react-icons/ci";
-import { HiOutlineDocument, HiOutlineWallet } from "react-icons/hi2/index";
-import {
-  MdFamilyRestroom,
-  MdInfoOutline,
-  MdModelTraining,
-  MdOutlineSchool,
-} from "react-icons/md/index";
-import { useHistory } from "react-router";
-import { useGet, useUploadPost } from "../../hooks/useApi";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { GetDetailPayload } from "../../models/GenericPayload";
-import { KaryawanEntity } from "../../models/Karyawan.entity";
-import { useAuth } from "../../providers/AuthProvider";
-import { Capacitor } from "@capacitor/core";
+import {IonContent, IonPage} from "@ionic/react";
+import {LockIcon} from "lucide-react";
+import {ReactNode, useEffect, useState} from "react";
+import {CiLogout} from "react-icons/ci";
+import {MdInfoOutline,} from "react-icons/md/index";
+import {useHistory} from "react-router";
+import {useGet, useUploadPost} from "../../hooks/useApi";
+import {useLocalStorage} from "../../hooks/useLocalStorage";
+import {GetDetailPayload} from "../../models/GenericPayload";
+import {KaryawanEntity} from "../../models/Karyawan.entity";
+import {useAuth} from "../../providers/AuthProvider";
+import {Capacitor} from "@capacitor/core";
+
 const Profil: React.FC = () => {
   const history = useHistory();
   const auth = useAuth();
@@ -25,7 +20,7 @@ const Profil: React.FC = () => {
     endpoint: `karyawans/${user?.karyawan.id}`,
   });
   const [image, setImage] = useState<any>("assets/logo-icon.png");
-  
+
   useEffect(() => {
     if (data) {
       let fotoUrl = "assets/logo-icon.png";
@@ -44,43 +39,43 @@ const Profil: React.FC = () => {
   const menus: IList[] = [
     {
       text: "Ubah Password",
-      icon: <LockIcon className="w-6 h-6 text-[#1f1d42] p-1" />,
+      icon: <LockIcon className="w-5 h-5 text-accent" />,
       handleClick: () => history.push("/ubah-password"),
     },
     {
       text: "Informasi Dasar",
-      icon: <MdInfoOutline className="w-6 h-6 text-[#1f1d42] p-1" />,
+      icon: <MdInfoOutline className="w-5 h-5 text-accent" />,
       handleClick: () => history.push("/informasi-dasar"),
     },
-    {
-      text: "Data Keluarga",
-      icon: <MdFamilyRestroom className="w-6 h-6 text-[#1f1d42] p-1" />,
-      handleClick: () => history.push("/data-keluarga"),
-    },
-    {
-      text: "Data Pelatihan",
-      icon: <MdModelTraining className="w-6 h-6 text-[#1f1d42] p-1" />,
-      handleClick: () => history.push("/data-pelatihan"),
-    },
-
-    {
-      text: "Data Pendidikan",
-      icon: <MdOutlineSchool className="w-6 h-6 text-[#1f1d42] p-1" />,
-      handleClick: () => history.push("/data-pendidikan"),
-    },
-    {
-      text: "Data Dokumen",
-      icon: <HiOutlineDocument className="w-6 h-6 text-[#1f1d42] p-1" />,
-      handleClick: () => history.push("/data-dokumen"),
-    },
-    {
-      text: "Data Rekening",
-      icon: <HiOutlineWallet className="w-6 h-6 text-[#1f1d42] p-1" />,
-      handleClick: () => history.push("/data-rekening"),
-    },
+    // {
+    //   text: "Data Keluarga",
+    //   icon: <MdFamilyRestroom className="w-5 h-5 text-accent" />,
+    //   handleClick: () => history.push("/data-keluarga"),
+    // },
+    // {
+    //   text: "Data Pelatihan",
+    //   icon: <MdModelTraining className="w-5 h-5 text-accent" />,
+    //   handleClick: () => history.push("/data-pelatihan"),
+    // },
+    //
+    // {
+    //   text: "Data Pendidikan",
+    //   icon: <MdOutlineSchool className="w-5 h-5 text-accent" />,
+    //   handleClick: () => history.push("/data-pendidikan"),
+    // },
+    // {
+    //   text: "Data Dokumen",
+    //   icon: <HiOutlineDocument className="w-5 h-5 text-accent" />,
+    //   handleClick: () => history.push("/data-dokumen"),
+    // },
+    // {
+    //   text: "Data Rekening",
+    //   icon: <HiOutlineWallet className="w-5 h-5 text-accent" />,
+    //   handleClick: () => history.push("/data-rekening"),
+    // },
     {
       text: "Keluar",
-      icon: <CiLogout className="w-6 h-6 text-[#1f1d42] p-1" />,
+      icon: <CiLogout className="w-5 h-5 text-accent" />,
       handleClick: () => {
         auth.logout();
         window.location.reload();
@@ -120,7 +115,7 @@ const Profil: React.FC = () => {
                   src={image}
                   onError={() => setImage('assets/logo-icon.png')}
                   alt="Gambar Profil"
-                  className="rounded-full w-20 h-20 border-[1px] border-zinc-300  object-cover "
+                  className="rounded-full w-20 h-20 object-cover "
                 ></img>
                 <input
                   type="file"
@@ -140,7 +135,7 @@ const Profil: React.FC = () => {
               </h4>
             </div>
           </div>
-          <ul className="max-w-md divide-y-2 divide-zinc-300 mb-4 ">
+          <ul className="max-w-md divide-y-[1px] divide-secondary mb-4 ">
             {menus.map((props, index) => (
               <List {...props} key={index} />
             ))}
@@ -164,15 +159,15 @@ function List({ icon, text, handleClick }: IList) {
         onClick={handleClick}
       >
         <div className="flex gap-8 items-center">
-          <div className="rounded-full p-1 border  border-zinc  ">
+          <div className="rounded-full p-3 bg-secondary  ">
             {icon}
           </div>
           <div className="text-sm  font-semibold">{text}</div>
         </div>
 
-        <div className="rounded-full p-1 border  border-zinc ">
-          <ArrowRightCircleIcon className="w-6 h-6 text-[#1f1d42]" />
-        </div>
+        {/*<div className="rounded-full p-3">*/}
+        {/*  <ArrowRightCircleIcon className="w-6 h-6 text-primary bg-secondary" strokeWidth={1} />*/}
+        {/*</div>*/}
       </div>
     </li>
   );

@@ -32,7 +32,7 @@ export default function DateCallendar({
       <div className="modal ">
         <div className="modal-box w-[350px] overflow-hidden">
           <h3 className="text-xl  mb-6">Filter Tanggal</h3>
-          
+
             <IonDatetime
               locale="id-ID"
               presentation={presentation}
@@ -42,7 +42,7 @@ export default function DateCallendar({
               className="text-[9px] mx-auto"
               size="cover"
             />
-          
+
 
           <div className="modal-action mt-4">
             <button className="btn bg-black" onClick={handleCancel}>
@@ -50,7 +50,7 @@ export default function DateCallendar({
             </button>
 
             <button
-              className="btn bg-red-700 border-red-700"
+              className="btn"
               onClick={() => {
                 handleSubmit(date);
               }}

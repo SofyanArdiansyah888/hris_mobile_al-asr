@@ -7,7 +7,7 @@ interface ITitleHeader {
 
 export default function TitleHeader({ title, rightIcon }: ITitleHeader) {
   return (
-    <IonHeader className={`ion-no-border p-4  flex justify-between  bg-zinc-50 ${Capacitor.getPlatform() === 'ios' ? "items-end h-24" : "items-center" }`}>
+    <IonHeader className={`ion-no-border p-4  flex justify-between bg-primary text-secondary ${Capacitor.getPlatform() === 'ios' ? "items-end h-24" : "items-center" }`}>
       <div className="font-semibold text-lg">{title}</div>
       {rightIcon}
     </IonHeader>
