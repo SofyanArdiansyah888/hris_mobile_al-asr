@@ -51,7 +51,8 @@ import {useDistanceStore} from "./store/DistanceStore";
 import {distanceInMeters} from "./utils/distanceCalculator";
 import {StatusBar, Style} from "@capacitor/status-bar";
 import RiwayatPresensi from "./pages/Presensi/RiwayatPresensi";
-import Presensi from "./pages/Presensi/Presensi";
+import Presensi, {PESANTREN_LOCATION} from "./pages/Presensi/Presensi";
+import useLocationStore from "./store/LocationStore";
 
 registerPlugin<BackgroundGeolocationPlugin>("BackgroundGeolocation");
 setupIonicReact();
@@ -420,6 +421,7 @@ const queryClient = new QueryClient({
 
 const InitApp: React.FC = () => {
     const {setDistance} = useDistanceStore();
+    const {setLocation} = useLocationStore()
 
     useEffect(() => {
         const setStatusBarStyleLight = async () => {
@@ -439,10 +441,7 @@ const InitApp: React.FC = () => {
         (async () => {
 
             const printCurrentPosition = async () => {
-                const nobelLatlng = {
-                    latitude: -5.1901967,
-                    longitude: 119.4776626,
-                };
+
                 await Geolocation.watchPosition(
                     {
                         enableHighAccuracy: true,
@@ -450,9 +449,13 @@ const InitApp: React.FC = () => {
                     (data) => {
                         if (data) {
                             const {latitude, longitude} = data.coords;
+                            setLocation({
+                                latitude,
+                                longitude
+                            })
                             const distance = distanceInMeters(
-                                nobelLatlng.latitude,
-                                nobelLatlng.longitude,
+                                PESANTREN_LOCATION.latitude,
+                                PESANTREN_LOCATION.longitude,
                                 latitude,
                                 longitude
                             );
@@ -461,7 +464,7 @@ const InitApp: React.FC = () => {
                     }
                 );
             };
-            printCurrentPosition();
+            await printCurrentPosition();
             // eslint-disable-next-line react-hooks/exhaustive-deps
         })();
     }, [setDistance]);

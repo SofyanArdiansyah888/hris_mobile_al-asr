@@ -12,18 +12,9 @@ import {useDistanceStore} from "../store/DistanceStore";
 import {Capacitor} from "@capacitor/core";
 
 const Tab1: React.FC = () => {
-  const [errorMessage, setErrorMessage] = useState<string>(
-    "Gagal Melakukan Absen"
-  );
-  const [successMessage, setSuccessMessage] = useState<string>(
-    "Anda Berhasil Melakukan Absensi"
-  );
-  const distance = useDistanceStore((state) => state.distance);
-  const [dangerAlert, setDangerAlert] = useState(false);
   const [imageProfil, setImageProfil] = useState<string>(
     "assets/logo-icon.png"
   );
-  const [isAbsenSuccess, setIsAbsenSuccess] = useState(false);
   const [user] = useLocalStorage("user");
   const [time, setTime] = useState<string>();
 
@@ -42,14 +33,6 @@ const Tab1: React.FC = () => {
   });
 
   useEffect(() => {
-    if (isAbsenSuccess) {
-      setTimeout(() => {
-        setIsAbsenSuccess(false);
-      }, 2000);
-    }
-  }, [isAbsenSuccess]);
-
-  useEffect(() => {
     if (data) {
       let fotoUrl = "assets/logo-icon.png";
 
@@ -63,34 +46,11 @@ const Tab1: React.FC = () => {
     }
   }, [data]);
 
-  const { mutate, isLoading: isAbsenLoading } = usePut({
-    name: "check-absen",
-    endpoint: `karyawans/${user?.karyawan.id}/absen`,
-    onSuccessCallback: (data: any) => {
-      setSuccessMessage(data?.message);
-      setIsAbsenSuccess(true);
-    },
-    onErrorCallback: (error: any) => {
-      if (error?.response?.status === 422) {
-        setErrorMessage(error.response?.data.message);
-      }
-      setDangerAlert(true);
-    },
-  });
-
   useEffect(() => {
     setTime(moment().format("DD MMM YYYY, HH:mm"));
     setInterval(() => setTime(moment().format("DD MMM YYYY, HH:mm")), 5000);
   }, []);
 
-  const handleAbsen = () => {
-    if (distance >= 100) {
-      setErrorMessage("Anda belum berada di radius absensi");
-      setDangerAlert(true);
-    } else {
-      mutate({});
-    }
-  };
 
   return (
     <IonPage>
@@ -140,8 +100,6 @@ const Tab1: React.FC = () => {
                   <h4 className="text-sm text-slate-500 mt-1">{time}</h4>
                 </div>
               </div>
-
-
             {
               payloadCheckAbsen?.data.message &&
               <div className="mt-12 mx-auto text-center h-24">
@@ -156,13 +114,6 @@ const Tab1: React.FC = () => {
         )}
       </IonContent>
 
-      <NotifAlert
-        isOpen={dangerAlert}
-        handleCancel={() => setDangerAlert(false)}
-        message={errorMessage}
-        type="danger"
-        setIsOpen={setDangerAlert}
-      />
     </IonPage>
   );
 };

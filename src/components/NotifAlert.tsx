@@ -29,17 +29,17 @@ export default function NotifAlert({
     },defaultTimeout)
 
   },[isOpen,setIsOpen,timeout])
-  
+
   const AlertIcon = () => {
     switch(type){
-      case 'danger' : 
+      case 'danger' :
       return <MdOutlineDangerous className="text-red-300 mx-auto w-20 h-20" />
-      case 'warning' : 
+      case 'warning' :
       return <MdWarning className="text-yellow-300 mx-auto w-20 h-20" />
-      case 'success' : 
+      case 'success' :
       return <CheckCircle2Icon className="text-green-300 mx-auto w-20 h-20" />
     }
-    
+
   }
 
   return (
@@ -51,10 +51,10 @@ export default function NotifAlert({
           <div className="w-full text-center ">
             <AlertIcon />
             <p className="my-4 text-lg">{message}</p>
-          </div>  
+          </div>
 
           <div className="modal-action mt-0">
-            <button className="btn btn-outline" onClick={handleCancel}>
+            <button className="btn btn-outline text-white" onClick={handleCancel}>
               Ok
             </button>
 

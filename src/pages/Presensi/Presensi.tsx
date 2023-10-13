@@ -3,52 +3,98 @@ import {CircleMarker, MapContainer, Marker, Popup, TileLayer, useMap} from "reac
 import "leaflet/dist/leaflet.css"
 import {LatLngExpression} from "leaflet";
 import {LogInIcon, LogOutIcon} from "lucide-react";
+import {useDistanceStore} from "../../store/DistanceStore";
+import useLocationStore from "../../store/LocationStore";
+import {useEffect, useState} from "react";
+import NotifAlert from "../../components/NotifAlert";
 
 
-const location: LatLngExpression = [-5.195352877950009, 119.43194099143338];
+export const PESANTREN_LOCATION = {
+    latitude: -5.195352877950009,
+    longitude: 119.43194099143338
+};
 const Presensi = () => {
+    const {latitude: pesantrenLatitude, longitude: pesantrenLongitude} = PESANTREN_LOCATION
+    const {latLng: {latitude, longitude}} = useLocationStore()
+    const {distance} = useDistanceStore()
+
+    const [errorMessage, setErrorMessage] = useState<string>(
+        "Gagal Melakukan Absen"
+    );
+    const [successMessage, setSuccessMessage] = useState<string>(
+        "Anda Berhasil Melakukan Absensi"
+    );
+    const [dangerAlert, setDangerAlert] = useState(false);
+
+    const handleAbsenDatang = () => {
+        if (distance >= 100) {
+            setErrorMessage("Anda belum berada di radius absensi");
+            setDangerAlert(true);
+        } else {
+            // mutate({});
+        }
+    };
+
+    const handleAbsenPulang = () => {
+        if (distance >= 100) {
+            setErrorMessage("Anda belum berada di radius absensi");
+            setDangerAlert(true);
+        } else {
+            // mutate({});
+        }
+    };
+
     return <IonPage>
-        <MapContainer center={location}
+        <MapContainer center={[latitude, longitude]}
                       zoom={19}
                       scrollWheelZoom={false}
                       style={{
                           width: "100%",
                           height: '100vh'
                       }}>
-            <ComponentResize/>
+            <ComponentResize lat={latitude} lng={longitude}/>
             <TileLayer
                 attribution=''
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
             <Marker
-                position={location}
+                position={[latitude, longitude]}
             >
                 <Popup>
-                    Pondok Pesantren Al-Asr Makassar
+                    Posisi Kamu
                 </Popup>
             </Marker>
 
 
-            <CircleMarker center={location} pathOptions={{color: "red"}} radius={100}>
-                <Popup>Popup in CircleMarker</Popup>
+            <CircleMarker center={[pesantrenLatitude, pesantrenLongitude]} pathOptions={{color: "red"}} radius={100}>
+                <Popup>Pondok Pesantren Al-Asr Makassar</Popup>
             </CircleMarker>
 
         </MapContainer>
-        <button className={"btn  absolute bottom-6 right-6 z-[999] flex items-center gap-3"}>
+        <button className={"btn  absolute bottom-6 right-6 z-[999] flex items-center gap-3"} onClick={handleAbsenPulang}>
             Pulang
             <LogOutIcon className={"h-4 w-4"}/>
         </button>
-        <button className={"btn !bg-primary !border-primary absolute bottom-6 left-6 z-[999] flex items-center gap-3"}>
+        <button className={"btn !bg-primary !border-primary absolute bottom-6 left-6 z-[999] flex items-center gap-3"} onClick={handleAbsenDatang}>
             <LogInIcon className={"h-4 w-4"}/>
             Datang
         </button>
+        <NotifAlert
+            isOpen={dangerAlert}
+            handleCancel={() => setDangerAlert(false)}
+            message={errorMessage}
+            type="danger"
+            setIsOpen={setDangerAlert}
+        />
     </IonPage>
 }
 
-const ComponentResize = () => {
+const ComponentResize = ({lat, lng}: { lat: number, lng: number }) => {
     const map = useMap()
-
+    useEffect(() => {
+        map.setView([lat, lng]);
+    }, [lat, lng]);
     setTimeout(() => {
         map.invalidateSize()
     }, 200)
