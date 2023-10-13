@@ -2,18 +2,18 @@ import {IonContent, IonPage, IonRefresher, IonRefresherContent,} from "@ionic/re
 import moment from "moment";
 import {useEffect, useState} from "react";
 import {CiFilter} from "react-icons/ci/index";
-import DateCallendar from "../components/DateCallendar";
-import EmptyBox from "../components/EmptyBox";
-import Loading from "../components/Loading";
-import TitleHeader from "../components/TitleHeader";
-import {useGet} from "../hooks/useApi";
-import {useLocalStorage} from "../hooks/useLocalStorage";
-import {AbsenEntity} from "../models/Absen.entity";
-import {GetDetailPayload, GetPayload} from "../models/GenericPayload";
-import {defaultDate} from "../utils/formatter";
+import DateCallendar from "../../components/DateCallendar";
+import EmptyBox from "../../components/EmptyBox";
+import Loading from "../../components/Loading";
+import TitleHeader from "../../components/TitleHeader";
+import {useGet} from "../../hooks/useApi";
+import {useLocalStorage} from "../../hooks/useLocalStorage";
+import {AbsenEntity} from "../../models/Absen.entity";
+import {GetDetailPayload, GetPayload} from "../../models/GenericPayload";
+import {defaultDate} from "../../utils/formatter";
 
 
-const Absensi: React.FC = () => {
+const RiwayatPresensi: React.FC = () => {
   const [isFilterModal, setIsFilterModal] = useState(false);
   const [date, setDate] = useState<string | string[] | null | undefined>(
     moment(defaultDate()).format('MMMM YYYY')
@@ -159,4 +159,4 @@ const Absensi: React.FC = () => {
   );
 };
 
-export default Absensi;
+export default RiwayatPresensi;

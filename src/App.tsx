@@ -12,22 +12,8 @@ import {IonReactRouter} from "@ionic/react-router";
 import {Redirect, Route, useLocation} from "react-router-dom";
 import Aktifitas from "./pages/Aktifitas/Aktifitas";
 import Beranda from "./pages/Beranda";
-
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
-// import "@ionic/react/css/normalize.css";
-// import "@ionic/react/css/structure.css";
-// import "@ionic/react/css/typography.css";
-/* Optional CSS utils that can be commented out */
-// import "@ionic/react/css/display.css";
-// import "@ionic/react/css/flex-utils.css";
-// import "@ionic/react/css/float-elements.css";
-// import "@ionic/react/css/padding.css";
-// import "@ionic/react/css/text-alignment.css";
-// import "@ionic/react/css/text-transformation.css";
-/* Theme variables */
 import {BackgroundGeolocationPlugin} from "@capacitor-community/background-geolocation";
 import {App} from "@capacitor/app";
 import {registerPlugin} from "@capacitor/core";
@@ -36,7 +22,6 @@ import {ContactIcon, FingerprintIcon, HistoryIcon, HomeIcon,} from "lucide-react
 import "moment/locale/id";
 import {useEffect, useLayoutEffect} from "react";
 import {QueryClient, QueryClientProvider} from "react-query";
-import Absensi from "./pages/Absensi";
 import CreateCuti from "./pages/Aktifitas/CreateCuti";
 import CreateIzin from "./pages/Aktifitas/CreateIzin";
 import DetailAktivitas from "./pages/Aktifitas/DetailAktivitas";
@@ -65,6 +50,8 @@ import {ProtectedRoute} from "./route/ProtectedRoute";
 import {useDistanceStore} from "./store/DistanceStore";
 import {distanceInMeters} from "./utils/distanceCalculator";
 import {StatusBar, Style} from "@capacitor/status-bar";
+import RiwayatPresensi from "./pages/Presensi/RiwayatPresensi";
+import Presensi from "./pages/Presensi/Presensi";
 
 registerPlugin<BackgroundGeolocationPlugin>("BackgroundGeolocation");
 setupIonicReact();
@@ -158,10 +145,20 @@ const MainTabs: React.FC = () => {
 
                 <Route
                     exact
-                    path="/absensi"
+                    path="/riwayat-presensi"
                     render={() => (
                         <ProtectedRoute>
-                            <Absensi/>
+                            <RiwayatPresensi/>
+                        </ProtectedRoute>
+                    )}
+                />
+
+                <Route
+                    exact
+                    path="/presensi"
+                    render={() => (
+                        <ProtectedRoute>
+                            <Presensi/>
                         </ProtectedRoute>
                     )}
                 />
@@ -387,8 +384,8 @@ const MainTabs: React.FC = () => {
                 </IonTabButton>
 
                 <IonTabButton
-                    tab="check-lock"
-                    href="/check-lock"
+                    tab="presensi"
+                    href="/presensi"
                     className={styles.tabButton}
                 >
                     <FingerprintIcon strokeWidth={1}/>
@@ -396,8 +393,8 @@ const MainTabs: React.FC = () => {
                 </IonTabButton>
 
                 <IonTabButton
-                    tab="absensi"
-                    href="/absensi"
+                    tab="riwayat-presensi"
+                    href="/riwayat-presensi"
                     className={styles.tabButton}
                 >
                     <HistoryIcon strokeWidth={1}/>
