@@ -10,36 +10,38 @@ import {GetDetailPayload} from "../models/GenericPayload";
 import {KaryawanEntity} from "../models/Karyawan.entity";
 import {useDistanceStore} from "../store/DistanceStore";
 import {Capacitor} from "@capacitor/core";
+import {UserEntity} from "../models/User.entity";
 
 const Tab1: React.FC = () => {
   const [imageProfil, setImageProfil] = useState<string>(
     "assets/logo-icon.png"
   );
   const [user] = useLocalStorage("user");
+
   const [time, setTime] = useState<string>();
 
   const { data, isFetching, refetch } = useGet<
-    GetDetailPayload<KaryawanEntity>
+    GetDetailPayload<UserEntity>
   >({
-    name: "karyawan",
-    endpoint: `karyawans/${user?.karyawan?.id}`,
+    name: "user",
+    endpoint: `user/${user?.id_pegawai}/profil`,
   });
 
   const { data: payloadCheckAbsen, refetch: refetchCheckAbsent } = useGet<
-    GetDetailPayload<{ message: string }>
+    { message: string }
   >({
     name: "check-absen",
-    endpoint: `karyawans/${user?.karyawan?.id}/check-absen`,
+    endpoint: `user/${user?.kode_pegawai}/check-absen`,
   });
-
+console.log(payloadCheckAbsen,'check absen')
   useEffect(() => {
     if (data) {
       let fotoUrl = "assets/logo-icon.png";
 
-      if (!(data.data.foto === null || data.data.foto === "")) {
-        fotoUrl = data.data.foto;
+      if (!(data.data.image === null || data.data.image === "")) {
+        fotoUrl = `${process.env.REACT_APP_BASIC_URL}storage/profile/${data.data.image}`;
       }
-
+    console.log(fotoUrl,'fotourl')
       setTimeout(() => {
         setImageProfil(fotoUrl);
       }, 300);
@@ -101,10 +103,10 @@ const Tab1: React.FC = () => {
                 </div>
               </div>
             {
-              payloadCheckAbsen?.data.message &&
+              payloadCheckAbsen?.message &&
               <div className="mt-12 mx-auto text-center h-24">
               <div className="rounded-xl px-2 py-2 w-48 text-sm">
-                 { payloadCheckAbsen?.data?.message?.substring(0,payloadCheckAbsen?.data?.message?.length-3)} &nbsp;
+                 { payloadCheckAbsen?.message?.substring(0,payloadCheckAbsen?.message?.length-3)} &nbsp;
               </div>
             </div>
             }

@@ -1,22 +1,19 @@
 
-/**
-* Homeflow Technologies | UserEntity.
-*
-* @property name
-* @property email
-* @property password
-* @property imei
-* @property notification_token
-*
-* @create UserEntity
-*/
 
 export interface UserEntity {
-  name: string;
-  email: string;
-  password: string;
-  imei: string;
-  notification_token: string;
-  token?: string;
+  id_pegawai: number;
+  nama_lengkap: string;
+  username: string;
+  role_id: string;
+  umur: string;
+  image: string;
+  qr_code_image: string;
+  kode_pegawai: string;
+  instansi: string;
+  jabatan: string;
+  npwp: string;
+  tgl_lahir: string;
+  tempat_lahir: string;
+  jenis_kelamin: string;
 }
 

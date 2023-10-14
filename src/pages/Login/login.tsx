@@ -13,7 +13,7 @@ import { IonContent } from "@ionic/react";
 import NotifAlert from "../../components/NotifAlert";
 const schema = yup
   .object({
-    name: yup.string().required(),
+    username: yup.string().required(),
     password: yup.string().required(),
   })
   .required();
@@ -34,23 +34,22 @@ export default function Login() {
     resolver: yupResolver(schema),
   });
 
-  const { mutate, isLoading } = usePost<FormData>({
+  const { mutate, isLoading } = usePost({
     endpoint: "login",
     name: "login",
-    onSuccessCallback: (data: UserEntity) => {
-      auth.login(data);
-    },
-    onErrorCallback: (error: any) => {
-      if (error?.response?.status === 422) {
-        setError("name", { message: error.response?.data.errors.name[0] });
-      } else {
-        setDangerAlert(true);
-      }
-    },
+    onSuccessCallback: (data) => {
+      if(data.status === true)
+        auth.login(data.data);
+      else
+        setError('username',{message: data.message})
+    }
   });
 
   const handleLogin = (data: FormData) => {
-    mutate(data);
+    var postData = new FormData();
+    postData.append('username',data.username)
+    postData.append('password',data.password)
+    mutate(postData);
   };
 
   return (
@@ -73,10 +72,10 @@ export default function Login() {
                 type="text"
                 className="input input-bordered  rounded-xl w-full mt-2 "
                 placeholder="Username"
-                {...register("name")}
+                {...register("username")}
               />
               <small className="text-xs text-red-700 mt-2 font-semibold pl-4">
-                {errors.name?.message}
+                {errors.username?.message}
               </small>
             </div>
 

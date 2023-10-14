@@ -14,17 +14,14 @@ export const PESANTREN_LOCATION = {
     longitude: 119.43194099143338
 };
 const Presensi = () => {
-    const {latitude: pesantrenLatitude, longitude: pesantrenLongitude} = PESANTREN_LOCATION
-    const {latLng: {latitude, longitude}} = useLocationStore()
-    const {distance} = useDistanceStore()
-
     const [errorMessage, setErrorMessage] = useState<string>(
         "Gagal Melakukan Absen"
     );
-    const [successMessage, setSuccessMessage] = useState<string>(
-        "Anda Berhasil Melakukan Absensi"
-    );
     const [dangerAlert, setDangerAlert] = useState(false);
+
+    const {latitude: pesantrenLatitude, longitude: pesantrenLongitude} = PESANTREN_LOCATION
+    const {latLng: {latitude, longitude}} = useLocationStore()
+    const {distance} = useDistanceStore()
 
     const handleAbsenDatang = () => {
         if (distance >= 100) {
@@ -51,7 +48,10 @@ const Presensi = () => {
                       style={{
                           width: "100%",
                           height: '100vh'
-                      }}>
+                      }}
+
+        >
+
             <ComponentResize lat={latitude} lng={longitude}/>
             <TileLayer
                 attribution=''
@@ -62,7 +62,7 @@ const Presensi = () => {
                 position={[latitude, longitude]}
             >
                 <Popup>
-                    Posisi Kamu
+                    Posisi Kamu :D
                 </Popup>
             </Marker>
 
@@ -72,11 +72,13 @@ const Presensi = () => {
             </CircleMarker>
 
         </MapContainer>
-        <button className={"btn  absolute bottom-6 right-6 z-[999] flex items-center gap-3"} onClick={handleAbsenPulang}>
+        <button className={"btn  absolute bottom-6 right-6 z-[999] flex items-center gap-3"}
+                onClick={handleAbsenPulang}>
             Pulang
             <LogOutIcon className={"h-4 w-4"}/>
         </button>
-        <button className={"btn !bg-primary !border-primary absolute bottom-6 left-6 z-[999] flex items-center gap-3"} onClick={handleAbsenDatang}>
+        <button className={"btn !bg-primary !border-primary absolute bottom-6 left-6 z-[999] flex items-center gap-3"}
+                onClick={handleAbsenDatang}>
             <LogInIcon className={"h-4 w-4"}/>
             Datang
         </button>

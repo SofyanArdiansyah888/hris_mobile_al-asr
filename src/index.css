@@ -4,10 +4,9 @@
 @import "dropzone/dist/dropzone.css";
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900");
 
-/*.leaflet-container {*/
-/*  width: 100%;*/
-/*  height: 100vh;*/
-/*}*/
+.leaflet-container {
+  /*@apply brightness-75*/
+}
 
 * {
   font-family: "Poppins";

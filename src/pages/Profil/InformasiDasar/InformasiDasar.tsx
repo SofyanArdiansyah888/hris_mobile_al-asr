@@ -35,7 +35,7 @@ const schema = yup
     alamat_lengkap: yup.string().notRequired(),
     status_karyawan: yup.string().notRequired(),
     shift: yup.string().notRequired(),
-    
+
   })
   .required();
 type FormData = yup.InferType<typeof schema>;
@@ -72,26 +72,26 @@ const InformasiDasar: React.FC = () => {
 
   useEffect(() => {
     if (karyawan) {
-      setValue("username", karyawan.data.user.name);
-      setValue('nama_lengkap',karyawan.data.nama_lengkap)
-      setValue("tempat_lahir", karyawan.data.tempat_lahir);
-      setValue("tanggal_lahir", karyawan.data.tanggal_lahir);
-      setValue("jenis_kelamin", karyawan.data.jenis_kelamin);
-      setValue("status_pernikahan", karyawan.data.status_pernikahan);
-      setValue("agama", karyawan.data.agama);
-      setValue("golongan_darah", karyawan.data.golongan_darah);
-      setValue("jumlah_anak", karyawan.data.jumlah_anak);
-      setValue("tanggal_bergabung", karyawan.data.tanggal_bergabung);
-      setValue("pendidikan_terakhir", karyawan.data.pendidikan_terakhir);
-      setValue("nik", karyawan.data.nik);
-      setValue("nip", karyawan.data.nip);
-      setValue("npwp", karyawan.data.npwp);
-      if(karyawan.data?.atasan) setValue("atasan", karyawan.data?.atasan?.nama_lengkap);
-      setValue("telepon", karyawan.data.telepon);
-      setValue("email", karyawan.data.user.email);
-      setValue("alamat_lengkap", karyawan.data.alamat_lengkap);
-      setValue("status_karyawan", karyawan.data.status_karyawan);
-      if(karyawan.data.shift) setValue("shift", karyawan.data.shift.nama_shift);
+      // setValue("username", karyawan.data.user.name);
+      // setValue('nama_lengkap',karyawan.data.nama_lengkap)
+      // setValue("tempat_lahir", karyawan.data.tempat_lahir);
+      // setValue("tanggal_lahir", karyawan.data.tanggal_lahir);
+      // setValue("jenis_kelamin", karyawan.data.jenis_kelamin);
+      // setValue("status_pernikahan", karyawan.data.status_pernikahan);
+      // setValue("agama", karyawan.data.agama);
+      // setValue("golongan_darah", karyawan.data.golongan_darah);
+      // setValue("jumlah_anak", karyawan.data.jumlah_anak);
+      // setValue("tanggal_bergabung", karyawan.data.tanggal_bergabung);
+      // setValue("pendidikan_terakhir", karyawan.data.pendidikan_terakhir);
+      // setValue("nik", karyawan.data.nik);
+      // setValue("nip", karyawan.data.nip);
+      // setValue("npwp", karyawan.data.npwp);
+      // if(karyawan.data?.atasan) setValue("atasan", karyawan.data?.atasan?.nama_lengkap);
+      // setValue("telepon", karyawan.data.telepon);
+      // setValue("email", karyawan.data.user.email);
+      // setValue("alamat_lengkap", karyawan.data.alamat_lengkap);
+      // setValue("status_karyawan", karyawan.data.status_karyawan);
+      // if(karyawan.data.shift) setValue("shift", karyawan.data.shift.nama_shift);
     }
   }, [karyawan, setValue]);
 

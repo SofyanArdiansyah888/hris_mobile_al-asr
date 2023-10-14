@@ -18,7 +18,7 @@ export function apiRequest({
     url: `${process.env.REACT_APP_BASE_URL}${endpoint === undefined ? "" : endpoint}`,
     headers: {
       'Accept' : 'application/json',
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json",
     },
   };
 
@@ -27,7 +27,7 @@ export function apiRequest({
   }
 
   if (data) {
-    config.data = JSON.stringify(data);
+    config.data = data;//JSON.stringify(data);
   }
 
   return new Promise(async (resolve, reject) => {
@@ -46,13 +46,13 @@ export function uploadRequest({
   method,
   endpoint,
 }: IRequest): Promise<any> {
-  
+
   const config: AxiosRequestConfig = {
     method,
     data,
     url: `${process.env.REACT_APP_BASE_URL}${endpoint}`,
     headers: {
-      'Content-Type': 'multipart/form-data',    
+      'Content-Type': 'multipart/form-data',
       'Accept' :   'multipart/form-data'
     },
   };
