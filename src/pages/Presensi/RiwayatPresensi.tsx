@@ -27,28 +27,18 @@ const RiwayatPresensi: React.FC = () => {
     refetch,
   } = useGet<GetPayload<AbsenEntity>>({
     name: "absens",
-    endpoint: `absens`,
+    endpoint: `absen/riwayat-absen`,
     filter: {
-      karyawan_id: user.karyawan.id,
+      kode_pegawai: user.kode_pegawai,
       date,
     },
   });
 
-  const { data: dendaPayload, refetch: refetchDenda } = useGet<
-    GetDetailPayload<{ potongan: number; range_keterlambatan: string }>
-  >({
-    name: "denda-absen",
-    endpoint: `absens/denda`,
-    filter: {
-      karyawan_id: user.karyawan.id,
-      date,
-    },
-  });
+
 
   useEffect(() => {
     refetch();
-    refetchDenda();
-  }, [date, refetch, refetchDenda]);
+  }, [date, refetch]);
 
 
 
@@ -70,7 +60,6 @@ const RiwayatPresensi: React.FC = () => {
           slot="fixed"
           onIonRefresh={(e) => {
             refetch();
-            refetchDenda();
             e.detail.complete();
           }}
         >
@@ -111,24 +100,24 @@ const RiwayatPresensi: React.FC = () => {
                         <div className="flex flex-col gap-3">
                           <div className="flex-1 min-w-0">
                             <p className="text-md font-semibold text-gray-900 ">
-                              {moment(absen.tanggal).format("DD MMMM Y")}
+                              {moment(absen.created_at).format("DD MMMM Y")}
                             </p>
                             <div>
                               <div className="flex justify-between items-center">
                                 <p className="text-sm text-gray-500 ">
                                   In{" "}
-                                  {absen.waktu_masuk?.substring(
+                                  {absen.jam_masuk?.substring(
                                     0,
-                                    absen.waktu_masuk?.length - 3
+                                    absen.jam_masuk?.length - 3
                                   )}{" "}
                                   - Out{" "}
-                                  {absen.waktu_keluar?.substring(
+                                  {absen.jam_pulang?.substring(
                                     0,
-                                    absen.waktu_keluar?.length - 3
+                                    absen.jam_pulang?.length - 3
                                   )}{" "}
                                 </p>
                                 <p className="text-xs text-accent">
-                                  Telat {absen.jumlah_telat} Menit
+                                  Telat {absen.telat} Menit
                                 </p>
                               </div>
                             </div>

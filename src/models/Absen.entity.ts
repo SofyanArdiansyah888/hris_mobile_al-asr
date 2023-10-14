@@ -1,25 +1,16 @@
 
-/**
-* Homeflow Technologies | AbsenEntity.
-*
-* @property karyawan_id
-* @property waktu_masuk
-* @property waktu_keluar
-* @property tanggal
-* @property jumlah_telat
-* @property jumlah_lembur
-*
-* @create AbsenEntity
-*/
 
 export interface AbsenEntity {
-    id: number;
-    karyawan_id: number;
-    tanggal: string;
-    jumlah_telat: number;
-    jumlah_lembur: number;
-    waktu_masuk: string;
-    waktu_keluar: string;
+    id_absen: string;
+    kode_absen: string;
+    nama_pegawai: string;
+    kode_pegawai: string;
+    tgl_absen: string;
+    created_at: string;
+    jam_masuk: string;
+    jam_pulang: string;
+    telat: string;
+    lembur: string;
+
   }
-  
-  
+

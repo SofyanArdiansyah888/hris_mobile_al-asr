@@ -7,26 +7,27 @@ import {useHistory} from "react-router";
 import {useGet, useUploadPost} from "../../hooks/useApi";
 import {useLocalStorage} from "../../hooks/useLocalStorage";
 import {GetDetailPayload} from "../../models/GenericPayload";
-import {KaryawanEntity} from "../../models/Karyawan.entity";
 import {useAuth} from "../../providers/AuthProvider";
 import {Capacitor} from "@capacitor/core";
+import {UserEntity} from "../../models/User.entity";
 
 const Profil: React.FC = () => {
   const history = useHistory();
   const auth = useAuth();
   const [user] = useLocalStorage("user");
-  const { data } = useGet<GetDetailPayload<KaryawanEntity>>({
-    name: "karyawan",
-    endpoint: `karyawans/${user?.karyawan.id}`,
+  const { data } = useGet<GetDetailPayload<UserEntity>>({
+    name: "user",
+    endpoint: `user/${user?.id_pegawai}`,
   });
+
   const [image, setImage] = useState<any>("assets/logo-icon.png");
 
   useEffect(() => {
     if (data) {
       let fotoUrl = "assets/logo-icon.png";
 
-      if (!(data.data.foto === null || data.data.foto === "")) {
-        fotoUrl = data.data.foto;
+      if (!(data.data.image === null || data.data.image === "")) {
+        fotoUrl = `${process.env.REACT_APP_BASIC_URL}storage/profile/${data.data.image}`;
       }
 
       setTimeout(() => {
@@ -101,7 +102,7 @@ const Profil: React.FC = () => {
 
     const formData = new FormData();
     formData.append('file', selectedImage);
-    formData.append('karyawan_id',user?.karyawan?.id)
+    formData.append('id',user?.id_pegawai)
     mutate(formData)
   };
   return (
@@ -127,11 +128,11 @@ const Profil: React.FC = () => {
             </div>
             {/* HEADER TEXT */}
             <div className="text-left flex-1">
-              <h1 className="text-sm mt-1 mb-0 font-semibold capitalize">
+              <h1 className="text-lg mt-1 mb-0 font-semibold capitalize">
                 {data?.data.nama_lengkap}
               </h1>
               <h4 className="text-xs text-slate-500 mt-1 capitalize">
-                {data?.data.jabatan?.nama_jabatan}
+                {data?.data?.jabatan}
               </h4>
             </div>
           </div>
