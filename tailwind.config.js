@@ -14,7 +14,7 @@ module.exports =  {
     },
   },
   plugins: [require("daisyui")],
-  darkMode: false,
+  darkMode: 'media',
   daisyui:{
     themes:['light']
   }

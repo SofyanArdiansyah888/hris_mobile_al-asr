@@ -7,6 +7,7 @@ import {useDistanceStore} from "../../store/DistanceStore";
 import useLocationStore from "../../store/LocationStore";
 import {useEffect, useState} from "react";
 import NotifAlert from "../../components/NotifAlert";
+import {Camera, CameraResultType} from "@capacitor/camera";
 
 
 export const PESANTREN_LOCATION = {
@@ -23,13 +24,33 @@ const Presensi = () => {
     const {latLng: {latitude, longitude}} = useLocationStore()
     const {distance} = useDistanceStore()
 
-    const handleAbsenDatang = () => {
-        if (distance >= 100) {
-            setErrorMessage("Anda belum berada di radius absensi");
-            setDangerAlert(true);
-        } else {
-            // mutate({});
-        }
+
+
+
+    const handleAbsenDatang = async () => {
+
+        const image = await Camera.getPhoto({
+            quality: 90,
+            allowEditing: true,
+            resultType: CameraResultType.Uri
+        });
+
+        // image.webPath will contain a path that can be set as an image src.
+        // You can access the original file using image.path, which can be
+        // passed to the Filesystem API to read the raw data of the image,
+        // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+        var imageUrl = image.webPath;
+
+        console.log(imageUrl)
+
+        // Can be set to the src of an image now
+        // imageElement.src = imageUrl;
+        // if (distance >= 100) {
+        //     setErrorMessage("Anda belum berada di radius absensi");
+        //     setDangerAlert(true);
+        // } else {
+        //     // mutate({});
+        // }
     };
 
     const handleAbsenPulang = () => {
