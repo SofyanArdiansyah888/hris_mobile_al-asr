@@ -33,7 +33,7 @@ const Tab1: React.FC = () => {
     name: "check-absen",
     endpoint: `user/${user?.kode_pegawai}/check-absen`,
   });
-console.log(payloadCheckAbsen,'check absen')
+
   useEffect(() => {
     if (data) {
       let fotoUrl = "assets/logo-icon.png";

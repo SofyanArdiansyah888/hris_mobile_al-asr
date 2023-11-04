@@ -35,7 +35,6 @@ const schema = yup
     alamat_lengkap: yup.string().notRequired(),
     status_karyawan: yup.string().notRequired(),
     shift: yup.string().notRequired(),
-
   })
   .required();
 type FormData = yup.InferType<typeof schema>;
