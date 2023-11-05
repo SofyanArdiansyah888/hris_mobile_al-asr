@@ -17,7 +17,7 @@ const Profil: React.FC = () => {
   const [user] = useLocalStorage("user");
   const { data } = useGet<GetDetailPayload<UserEntity>>({
     name: "user",
-    endpoint: `user/${user?.id_pegawai}`,
+    endpoint: `user/${user?.id_pegawai}/profil`,
   });
 
   const [image, setImage] = useState<any>("assets/logo-icon.png");
