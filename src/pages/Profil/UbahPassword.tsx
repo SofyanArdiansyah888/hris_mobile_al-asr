@@ -7,7 +7,7 @@ import * as yup from "yup";
 import KembaliHeader from "../../components/KembaliHeader";
 import LabelError from "../../components/LabelError";
 import NotifAlert from "../../components/NotifAlert";
-import { usePut } from "../../hooks/useApi";
+import {usePost, usePut} from "../../hooks/useApi";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useAuth } from "../../providers/AuthProvider";
 
@@ -35,9 +35,9 @@ const UbahPassword: React.FC = () => {
   });
 
   const auth = useAuth();
-  const { mutate, isLoading } = usePut({
+  const { mutate, isLoading } = usePost({
     name: "ubah_password",
-    endpoint: `karyawans/${user?.karyawan?.id}/update-password`,
+    endpoint: `user/${user?.id_pegawai}/update-password`,
     onSuccessCallback: () => {
       setSuccessAlert(true);
       auth.logout();
@@ -49,10 +49,9 @@ const UbahPassword: React.FC = () => {
   const history = useHistory();
 
   const handleChangePassword = (data: FormData) => {
-    mutate({
-      name: user.name,
-      password: data.password,
-    });
+    const postData = new FormData()
+    postData.append('password', data?.password);
+    mutate(postData);
   };
   return (
     <>

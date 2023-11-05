@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { usePost } from "../../hooks/useApi";
-import { UserEntity } from "../../models/User.entity";
 import { useAuth } from "../../providers/AuthProvider";
 
 // import {BackgroundGeolocationPlugin} from "@capacitor-community/background-geolocation";
@@ -46,7 +45,7 @@ export default function Login() {
   });
 
   const handleLogin = (data: FormData) => {
-    var postData = new FormData();
+    const postData = new FormData();
     postData.append('username',data.username)
     postData.append('password',data.password)
     mutate(postData);

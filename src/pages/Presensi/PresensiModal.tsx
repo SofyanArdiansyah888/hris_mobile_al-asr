@@ -3,10 +3,12 @@ import LabelError from "../../components/LabelError";
 import {useLocalStorage} from "../../hooks/useLocalStorage";
 import {useForm, useWatch} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {usePut} from "../../hooks/useApi";
+import {usePost} from "../../hooks/useApi";
 import * as yup from "yup";
 import {useDistanceStore} from "../../store/DistanceStore";
 import {Camera, CameraResultType, CameraSource} from "@capacitor/camera";
+import useLocationStore from "../../store/LocationStore";
+import {useQueryClient} from "react-query";
 
 type PresensiModalType = {
     tipe: string,
@@ -15,10 +17,11 @@ type PresensiModalType = {
 
 const schema = yup
     .object({
-        keterangan: yup.string().required()
+        keterangan: yup.string().required(),
+        alasan: yup.string().notRequired()
     })
     .required();
-type FormData = yup.InferType<typeof schema> & { foto: string, tipe: string };
+type FormData = yup.InferType<typeof schema> & { foto: string, tipe: string, maps_absen: string };
 const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
     absen: PresensiModalType,
     setAbsensi: React.Dispatch<PresensiModalType>
@@ -27,18 +30,19 @@ const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
 }) => {
     const {distance} = useDistanceStore()
     const [user] = useLocalStorage("user");
+    const {latLng: {latitude, longitude}} = useLocationStore()
 
     const {
         register,
         formState: {errors},
         handleSubmit,
-        setValue,
         control
-    } = useForm<FormData >({
+    } = useForm<FormData>({
         mode: "onChange",
         resolver: yupResolver(schema),
         defaultValues: {
-            keterangan: 'Bekerja Di Kantor'
+            keterangan: 'Bekerja Di Kantor',
+            alasan: ''
         }
     });
 
@@ -47,16 +51,21 @@ const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
         name: 'keterangan'
     })
 
-
-    const {mutate, isLoading} = usePut({
-        name: "karyawan",
-        endpoint: `karyawans/${user?.karyawan?.id}/update-profil`,
+    const queryClient = useQueryClient()
+    const {mutate, isLoading} = usePost({
+        name: "absen-karyawan",
+        endpoint: `do-absensi`,
         onSuccessCallback: () => {
-            setAbsensi({
-                isShown: false,
-                tipe: 'datang'
-            })
-            setSuccessAlert(true);
+            queryClient.invalidateQueries({
+                queryKey: ['absens', 'check-absen']
+            }).then(() => {
+                setAbsensi({
+                    isShown: false,
+                    tipe: 'datang'
+                })
+                setSuccessAlert(true);
+            }).catch((error) => console.log(error));
+
         },
         onErrorCallback: () => {
             setAbsensi({
@@ -75,13 +84,17 @@ const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
             resultType: CameraResultType.Base64,
             source: CameraSource.Camera,
         }).then((photoResult) => {
-            const payload = {
-                ...data,
-                foto: photoResult.base64String,
-                tipe: absen.tipe
-            }
-            console.log(payload, 'payload absensi')
-            mutate(payload)
+            const postData = new FormData();
+            postData.append('foto', photoResult.base64String as string)
+            postData.append('tipe', absen.tipe)
+            postData.append('map_absen', `${latitude},${longitude}`)
+            postData.append('nama_pegawai', user?.nama_lengkap)
+            postData.append('kode_pegawai', user?.kode_pegawai)
+            postData.append('keterangan', data.keterangan)
+            postData.append('alasan', data?.alasan as string)
+            mutate(postData);
+            console.log(postData, 'payload absensi')
+            mutate(postData)
         });
     };
 
@@ -95,7 +108,8 @@ const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
                 >
                     <h3 className="text-xl font-semibold capitalize">Form Absensi {absen.tipe}</h3>
                     <div className="flex flex-col justify-center items-center ">
-                        {/* KETERANGAN */}
+
+                        {/*KETERANGAN*/}
                         <div className="form_group">
                             <label className="text-sm">Keterangan</label>
                             <select
@@ -111,6 +125,19 @@ const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
                                 errorMessage={errors.keterangan?.message}
                             />
                         </div>
+
+                        {/* ALASAN */}
+                        {
+                            (absen.tipe === 'datang' && keterangan !== 'Bekerja Di Kantor') &&
+                            <div className="form_group">
+                                <label className="text-sm">Alasan</label>
+                                <textarea
+                                    className="textarea textarea-bordered mt-2 rounded-xl textarea-sm w-full"
+                                    {...register("alasan")}
+                                />
+                                <LabelError errorMessage={errors.alasan?.message}/>
+                            </div>
+                        }
                     </div>
 
                     <button
