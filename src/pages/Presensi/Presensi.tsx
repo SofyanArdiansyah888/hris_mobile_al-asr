@@ -7,17 +7,15 @@ import {useEffect, useState} from "react";
 import NotifAlert from "../../components/NotifAlert";
 import PresensiModal from "./PresensiModal";
 import {useGet} from "../../hooks/useApi";
-import {useAuth} from "../../providers/AuthProvider";
 import {useLocalStorage} from "../../hooks/useLocalStorage";
+import usePesantrenLocationStore from "../../store/usePesantrenLocationStore";
 
-export const PESANTREN_LOCATION = {
-    latitude: -5.195352877950009,
-    longitude: 119.43194099143338
-};
+
 const Presensi = () => {
     const [dangerAlert, setDangerAlert] = useState(false);
     const [successAlert, setSuccessAlert] = useState(false);
-    const {latitude: pesantrenLatitude, longitude: pesantrenLongitude} = PESANTREN_LOCATION
+
+    const {latLng: {longitude: pesantrenLongitude, latitude: pesantrenLatitude, radius}} = usePesantrenLocationStore()
     const {latLng: {latitude, longitude}} = useLocationStore()
     const [user] = useLocalStorage("user")
     const [absensi, setAbsensi] = useState<{ tipe: string, isShown: boolean }>({
@@ -25,7 +23,7 @@ const Presensi = () => {
         isShown: false
     });
     const {data: payloadCheckAbsen} = useGet<
-        { message: string,isAbsenDatang: boolean }
+        { message: string, isAbsenDatang: boolean }
     >({
         name: "check-absen",
         endpoint: `user/${user?.kode_pegawai}/check-absen`,
@@ -56,7 +54,7 @@ const Presensi = () => {
             </Marker>
 
 
-            <CircleMarker center={[pesantrenLatitude, pesantrenLongitude]} pathOptions={{color: "red"}} radius={100}>
+            <CircleMarker center={[pesantrenLatitude, pesantrenLongitude]} pathOptions={{color: "red"}} radius={radius}>
                 <Popup>Pondok Pesantren Al-Asr Makassar</Popup>
             </CircleMarker>
 

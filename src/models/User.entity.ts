@@ -15,5 +15,10 @@ export interface UserEntity {
   tgl_lahir: string;
   tempat_lahir: string;
   jenis_kelamin: string;
+  setting: {
+    latitude: number;
+    longitude: number;
+    radius: number
+  }
 }
 

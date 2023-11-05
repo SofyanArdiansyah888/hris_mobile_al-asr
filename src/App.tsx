@@ -51,8 +51,9 @@ import {useDistanceStore} from "./store/DistanceStore";
 import {distanceInMeters} from "./utils/distanceCalculator";
 import {StatusBar, Style} from "@capacitor/status-bar";
 import RiwayatPresensi from "./pages/Presensi/RiwayatPresensi";
-import Presensi, {PESANTREN_LOCATION} from "./pages/Presensi/Presensi";
+import Presensi from "./pages/Presensi/Presensi";
 import useLocationStore from "./store/LocationStore";
+import usePesantrenLocationStore from "./store/usePesantrenLocationStore";
 
 registerPlugin<BackgroundGeolocationPlugin>("BackgroundGeolocation");
 setupIonicReact();
@@ -422,6 +423,7 @@ const queryClient = new QueryClient({
 const InitApp: React.FC = () => {
     const {setDistance} = useDistanceStore();
     const {setLocation} = useLocationStore()
+    const {latLng} = usePesantrenLocationStore()
 
     useEffect(() => {
         const setStatusBarStyleLight = async () => {
@@ -454,8 +456,8 @@ const InitApp: React.FC = () => {
                                 longitude
                             })
                             const distance = distanceInMeters(
-                                PESANTREN_LOCATION.latitude,
-                                PESANTREN_LOCATION.longitude,
+                                latLng.latitude,
+                                latLng.longitude,
                                 latitude,
                                 longitude
                             );
