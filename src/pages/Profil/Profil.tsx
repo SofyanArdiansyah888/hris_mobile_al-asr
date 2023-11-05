@@ -85,25 +85,29 @@ const Profil: React.FC = () => {
   ];
 
   const {mutate} = useUploadPost({
-    name:'karyawan',
-    endpoint:'upload-foto'
+    name:'user',
+    endpoint:`user/${user?.id_pegawai}/update-photo-profil`
   })
 // Your location lets us ensure an accurate position where are you while doing this attendance
   const handleImageChange = (e: any) => {
     const selectedImage = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = () => {
+    reader.onload = (e: ProgressEvent<FileReader>) => {
       if (reader.readyState === 2) {
         setImage(reader.result);
+
+        const formData = new FormData();
+        let base64Image = reader?.result as string;
+        formData.append('file', base64Image.replace(/^data:image\/[a-z]+;base64,/, ''));
+        formData.append('id',user?.id_pegawai)
+        mutate(formData)
       }
     };
     reader.readAsDataURL(selectedImage);
 
-    const formData = new FormData();
-    formData.append('file', selectedImage);
-    formData.append('id',user?.id_pegawai)
-    mutate(formData)
+
+
   };
   return (
     <IonPage>
