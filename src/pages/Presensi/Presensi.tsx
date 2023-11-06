@@ -1,5 +1,5 @@
 import {IonPage} from "@ionic/react";
-import {CircleMarker, MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
+import {Circle, LayersControl, MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
 import "leaflet/dist/leaflet.css"
 import {LogInIcon, LogOutIcon} from "lucide-react";
 import useLocationStore from "../../store/LocationStore";
@@ -28,9 +28,11 @@ const Presensi = () => {
         name: "check-absen",
         endpoint: `user/${user?.kode_pegawai}/check-absen`,
     });
+
     return <IonPage>
         <MapContainer center={[latitude, longitude]}
                       zoom={19}
+                      minZoom={13}
                       scrollWheelZoom={false}
                       style={{
                           width: "100%",
@@ -38,25 +40,30 @@ const Presensi = () => {
                       }}
 
         >
+            <LayersControl>
+                <LayersControl.Overlay checked name="Your Position">
+                <ComponentResize lat={latitude} lng={longitude}/>
+                <TileLayer
+                    attribution=''
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker
+                    position={[latitude, longitude]}
+                >
+                    <Popup>
+                        Posisi Kamu :D
+                    </Popup>
+                </Marker>
+                </LayersControl.Overlay>
 
-            <ComponentResize lat={latitude} lng={longitude}/>
-            <TileLayer
-                attribution=''
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+                <LayersControl.Overlay checked name="Marker with popup">
+                    <Circle center={[pesantrenLatitude, pesantrenLongitude]} pathOptions={{color: "red"}}
+                            radius={radius}>
+                        <Popup>Pondok Pesantren Al-Asr Makassar</Popup>
+                    </Circle>
+                </LayersControl.Overlay>
 
-            <Marker
-                position={[latitude, longitude]}
-            >
-                <Popup>
-                    Posisi Kamu :D
-                </Popup>
-            </Marker>
-
-
-            <CircleMarker center={[pesantrenLatitude, pesantrenLongitude]} pathOptions={{color: "red"}} radius={radius}>
-                <Popup>Pondok Pesantren Al-Asr Makassar</Popup>
-            </CircleMarker>
+            </LayersControl>
 
         </MapContainer>
         <button className={"btn  absolute bottom-6 right-6 z-[999] !border-none flex items-center gap-3"}

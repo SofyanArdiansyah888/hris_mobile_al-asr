@@ -54,6 +54,7 @@ import RiwayatPresensi from "./pages/Presensi/RiwayatPresensi";
 import Presensi from "./pages/Presensi/Presensi";
 import useLocationStore from "./store/LocationStore";
 import usePesantrenLocationStore from "./store/usePesantrenLocationStore";
+import {useLocalStorage} from "./hooks/useLocalStorage";
 
 registerPlugin<BackgroundGeolocationPlugin>("BackgroundGeolocation");
 setupIonicReact();
@@ -422,8 +423,9 @@ const queryClient = new QueryClient({
 
 const InitApp: React.FC = () => {
     const {setDistance} = useDistanceStore();
-    const {setLocation} = useLocationStore()
-    const {latLng} = usePesantrenLocationStore()
+    const {setLocation} = useLocationStore();
+    const [user] = useLocalStorage("user")
+    const {latLng, setLocation: setPesantrenLocation} = usePesantrenLocationStore()
 
     useEffect(() => {
         const setStatusBarStyleLight = async () => {
@@ -470,6 +472,16 @@ const InitApp: React.FC = () => {
             // eslint-disable-next-line react-hooks/exhaustive-deps
         })();
     }, [setDistance]);
+
+    useEffect(() => {
+        if (user) {
+            setPesantrenLocation({
+                latitude: user.setting.latitude,
+                longitude: user.setting.longitude,
+                radius: user.setting.radius
+            })
+        }
+    }, [])
 
     return (
         <AuthProvider>
