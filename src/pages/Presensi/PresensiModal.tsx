@@ -9,6 +9,7 @@ import {useDistanceStore} from "../../store/DistanceStore";
 import {Camera, CameraResultType, CameraSource} from "@capacitor/camera";
 import useLocationStore from "../../store/LocationStore";
 import {useQueryClient} from "react-query";
+import usePesantrenLocationStore from "../../store/usePesantrenLocationStore";
 
 type PresensiModalType = {
     tipe: string,
@@ -31,7 +32,7 @@ const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
     const {distance} = useDistanceStore()
     const [user] = useLocalStorage("user");
     const {latLng: {latitude, longitude}} = useLocationStore()
-
+    const {latLng} = usePesantrenLocationStore()
     const {
         register,
         formState: {errors},
@@ -92,8 +93,6 @@ const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
             postData.append('kode_pegawai', user?.kode_pegawai)
             postData.append('keterangan', data.keterangan)
             postData.append('alasan', data?.alasan as string)
-            mutate(postData);
-            console.log(postData, 'payload absensi')
             mutate(postData)
         });
     };
@@ -142,13 +141,13 @@ const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
 
                     <button
                         className={`btn bg-red-600 border-red-600 w-full my-4 ${
-                            distance >= 100 && keterangan === 'Bekerja Di Kantor' ? "animate-pulse !border-none" : ""
+                            distance >= latLng.radius && keterangan === 'Bekerja Di Kantor' ? "animate-pulse !border-none" : ""
                         }`}
                         type="submit"
-                        disabled={distance >= 100 && keterangan === 'Bekerja Di Kantor'}
+                        disabled={distance >= latLng.radius && keterangan === 'Bekerja Di Kantor'}
                     >
                         {isLoading ? `Loading...` :
-                            distance >= 100 && keterangan === 'Bekerja Di Kantor' ? "Anda Belum Berada di Lokasi Absen" : "Lakukan Absensi"}
+                            distance >= latLng.radius && keterangan === 'Bekerja Di Kantor' ? "Anda Belum Berada di Lokasi Absen" : "Lakukan Absensi"}
                     </button>
 
 

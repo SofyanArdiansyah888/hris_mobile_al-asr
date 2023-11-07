@@ -38,16 +38,15 @@ const Tab1: React.FC = () => {
             if (!(data.data.image === null || data.data.image === "")) {
                 fotoUrl = `${process.env.REACT_APP_BASIC_URL}storage/profile/${data.data.image}`;
             }
-            console.log(fotoUrl, 'fotourl')
             setTimeout(() => {
                 setImageProfil(fotoUrl);
             }, 300);
         }
     }, [data]);
-
     useEffect(() => {
         setTime(moment().format("DD MMM YYYY, HH:mm"));
         setInterval(() => setTime(moment().format("DD MMM YYYY, HH:mm")), 5000);
+
     }, []);
 
 
@@ -70,12 +69,14 @@ const Tab1: React.FC = () => {
                     </div>
                 ) : (
                     <>
-                        <div className="px-6 pt-12 text-2xl  text-center font-semibold">Pesantren
+                        <div
+                            className="px-6 pt-12 text-2xl  text-center font-semibold">{user.setting.nama_instansi.split(' ')[0]}
                             <br/>
                             <span className={"text-accent"}>
-              Al-Asr Makassar
-              </span>
-
+                              {
+                                  user.setting.nama_instansi.split(' ').slice(1,99).toString().replace(',',' ')
+                              }
+                            </span>
                         </div>
                         <div className="flex flex-col h-[75vh] justify-center">
                             <div className="flex flex-col pt-6 px-6 items-center w-full gap-4">
