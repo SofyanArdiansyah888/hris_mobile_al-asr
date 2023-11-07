@@ -74,7 +74,7 @@ const Tab1: React.FC = () => {
                             <br/>
                             <span className={"text-accent"}>
                               {
-                                  user.setting.nama_instansi.split(' ').slice(1,99).toString().replace(',',' ')
+                                  user.setting.nama_instansi.split(' ').slice(1,99).toString().replaceAll(',',' ')
                               }
                             </span>
                         </div>
