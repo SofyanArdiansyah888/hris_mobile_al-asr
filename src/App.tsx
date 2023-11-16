@@ -476,9 +476,9 @@ const InitApp: React.FC = () => {
     useEffect(() => {
         if (user) {
             setPesantrenLocation({
-                latitude: user.setting.latitude,
-                longitude: user.setting.longitude,
-                radius: user.setting.radius
+                latitude: user.cabang.latitude,
+                longitude: user.cabang.longitude,
+                radius: user.cabang.radius
             })
         }
     }, [])
