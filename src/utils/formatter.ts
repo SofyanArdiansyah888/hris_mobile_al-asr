@@ -13,8 +13,9 @@ const tanggalFilter = () => {
 }
 
 const defaultDate = () => {
-  return moment().date() > 22 ? moment().add('month',1)
-        .format('yyyy-MM-DD') : moment().format('yyyy-MM-DD')
+  // return moment().date() > 22 ? moment().add('month',1)
+  //       .format('yyyy-MM-DD') : moment().format('yyyy-MM-DD')
+  return moment().format('yyyy-MM-DD');
 }
 
 function formatRupiah(angka: number | string | undefined, prefix: string = "Rp.") {
