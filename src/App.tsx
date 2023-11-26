@@ -55,6 +55,7 @@ import Presensi from "./pages/Presensi/Presensi";
 import useLocationStore from "./store/LocationStore";
 import usePesantrenLocationStore from "./store/usePesantrenLocationStore";
 import {useLocalStorage} from "./hooks/useLocalStorage";
+import FaceDetetionComponent from "./pages/Presensi/FaceDetetionComponent";
 
 registerPlugin<BackgroundGeolocationPlugin>("BackgroundGeolocation");
 setupIonicReact();
@@ -115,6 +116,14 @@ const MainTabs: React.FC = () => {
                     exact
                     path="/login"
                     render={() => (auth.user ? <Redirect to="/"/> : <Login/>)}
+                />
+                <Route
+                    path="/tempe"
+                    render={() => (
+                        // <ProtectedRoute>
+                            <FaceDetetionComponent/>
+                        // </ProtectedRoute>
+                    )}
                 />
 
                 <Route
