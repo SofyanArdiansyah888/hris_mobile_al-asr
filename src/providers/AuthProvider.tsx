@@ -28,9 +28,9 @@ export const AuthProvider = ({children}: IAuthProvider) => {
 
     const login = async (data: UserEntity) => {
         setLocation({
-            latitude: data.setting.latitude,
-            longitude: data.setting.longitude,
-            radius: data.setting.radius
+            latitude: data.cabang.latitude,
+            longitude: data.cabang.longitude,
+            radius: data.cabang.radius
         })
         setUser(data);
         if (history) history.replace("/beranda");

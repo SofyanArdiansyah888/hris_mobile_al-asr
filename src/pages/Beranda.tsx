@@ -70,11 +70,11 @@ const Tab1: React.FC = () => {
                 ) : (
                     <>
                         <div
-                            className="px-6 pt-12 text-2xl  text-center font-semibold">{user.setting.nama_instansi.split(' ')[0]}
+                            className="px-6 pt-12 text-2xl  text-center font-semibold">{user.cabang.nama_cabang.split(' ')[0]}
                             <br/>
                             <span className={"text-accent"}>
                               {
-                                  user.setting.nama_instansi.split(' ').slice(1,99).toString().replaceAll(',',' ')
+                                  user.cabang.nama_cabang.split(' ').slice(1,99).toString().replaceAll(',',' ')
                               }
                             </span>
                         </div>
