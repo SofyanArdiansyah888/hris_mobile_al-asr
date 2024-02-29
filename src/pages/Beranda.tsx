@@ -11,7 +11,7 @@ import {UserEntity} from "../models/User.entity";
 
 const Tab1: React.FC = () => {
     const [imageProfil, setImageProfil] = useState<string>(
-        "assets/logo-icon.png"
+        "assets/profil.png"
     );
     const [user] = useLocalStorage("user");
 
@@ -33,7 +33,7 @@ const Tab1: React.FC = () => {
 
     useEffect(() => {
         if (data) {
-            let fotoUrl = "assets/logo-icon.png";
+            let fotoUrl = "assets/profil.png";
 
             if (!(data.data.image === null || data.data.image === "")) {
                 fotoUrl = `${process.env.REACT_APP_BASIC_URL}storage/profile/${data.data.image}`;
@@ -85,7 +85,7 @@ const Tab1: React.FC = () => {
                                     alt="Gambar Profil"
                                     onError={() => setImageProfil("assets/logo.png")}
                                     className={`w-48 h-48 rounded-full border-2 border-zinc-50 object-cover ${
-                                        imageProfil === "assets/logo-icon.png"
+                                        imageProfil === "assets/profil.png"
                                             ? "animate-pulse"
                                             : ""
                                     }`}

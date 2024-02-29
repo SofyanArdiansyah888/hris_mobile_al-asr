@@ -6,10 +6,12 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {usePost} from "../../hooks/useApi";
 import * as yup from "yup";
 import {useDistanceStore} from "../../store/DistanceStore";
-import {Camera, CameraResultType, CameraSource} from "@capacitor/camera";
 import useLocationStore from "../../store/LocationStore";
 import {useQueryClient} from "react-query";
 import usePesantrenLocationStore from "../../store/usePesantrenLocationStore";
+import {useHistory} from "react-router-dom";
+import usePresensiFormStore from "../../store/PresensiFormStore";
+import {Camera, CameraResultType, CameraSource} from "@capacitor/camera";
 
 type PresensiModalType = {
     tipe: string,
@@ -29,10 +31,12 @@ const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
     setDangerAlert: React.Dispatch<boolean>,
     setSuccessAlert: React.Dispatch<boolean>
 }) => {
+    const history = useHistory()
     const {distance} = useDistanceStore()
     const [user] = useLocalStorage("user");
     const {latLng: {latitude, longitude}} = useLocationStore()
     const {latLng} = usePesantrenLocationStore()
+    const {setPayload} = usePresensiFormStore();
     const {
         register,
         formState: {errors},
@@ -53,7 +57,7 @@ const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
     })
 
     const queryClient = useQueryClient()
-    const {mutate, isLoading} = usePost({
+    const { mutate,isLoading} = usePost({
         name: "absen-karyawan",
         endpoint: `do-absensi`,
         onSuccessCallback: () => {
@@ -72,13 +76,29 @@ const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
             setAbsensi({
                 isShown: false,
                 tipe: 'datang'
+
             })
             setDangerAlert(true)
         },
     });
 
 
-    const handleUpdate = (data: FormData) => {
+    const handlePresensi = (data: FormData) => {
+
+        setPayload({
+            foto:"",
+            tipe: absen.tipe,
+            map_absen:`${latitude},${longitude}`,
+            nama_pegawai: user?.nama_lengkap,
+            kode_pegawai: user?.kode_pegawai,
+            keterangan: data?.keterangan,
+            alasan: data?.alasan as string
+        })
+        setAbsensi({
+            isShown: false,
+            tipe: 'datang'
+        })
+
         Camera.getPhoto({
             quality: 10,
             allowEditing: false,
@@ -95,14 +115,16 @@ const PresensiModal = ({absen, setAbsensi, setDangerAlert, setSuccessAlert}: {
             postData.append('alasan', data?.alasan as string)
             mutate(postData)
         });
+
+        // history.replace("/presensi-action")
     };
 
-    return <IonModal isOpen={absen.isShown}>
+    return <IonModal isOpen={absen?.isShown}>
 
         <IonContent scrollY>
             <div className="flex flex-col mt-12   justify-center items-center ">
                 <form
-                    onSubmit={handleSubmit(handleUpdate)}
+                    onSubmit={handleSubmit(handlePresensi)}
                     className="w-full px-12"
                 >
                     <h3 className="text-xl font-semibold capitalize">Form Absensi {absen.tipe}</h3>

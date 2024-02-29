@@ -118,11 +118,11 @@ const MainTabs: React.FC = () => {
                     render={() => (auth.user ? <Redirect to="/"/> : <Login/>)}
                 />
                 <Route
-                    path="/tempe"
+                    path="/presensi-action"
                     render={() => (
-                        // <ProtectedRoute>
+                        <ProtectedRoute>
                             <FaceDetetionComponent/>
-                        // </ProtectedRoute>
+                        </ProtectedRoute>
                     )}
                 />
 

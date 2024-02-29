@@ -20,11 +20,11 @@ const Profil: React.FC = () => {
     endpoint: `user/${user?.id_pegawai}/profil`,
   });
 
-  const [image, setImage] = useState<any>("assets/logo-icon.png");
+  const [image, setImage] = useState<any>("assets/profil.png");
 
   useEffect(() => {
     if (data) {
-      let fotoUrl = "assets/logo-icon.png";
+      let fotoUrl = "assets/profil.png";
 
       if (!(data.data.image === null || data.data.image === "")) {
         fotoUrl = `${process.env.REACT_APP_BASIC_URL}storage/profile/${data.data.image}`;
@@ -118,7 +118,7 @@ const Profil: React.FC = () => {
               <label>
                 <img
                   src={image}
-                  onError={() => setImage('assets/logo-icon.png')}
+                  onError={() => setImage('assets/profil.png')}
                   alt="Gambar Profil"
                   className="rounded-full w-20 h-20 object-cover "
                 ></img>
